@@ -1,2 +1,18 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
+
+.no-padding {
+    padding: 0px!important;
+}
+
+.no-border {
+    border: none!important;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.right {
+    float: right!important;
+}

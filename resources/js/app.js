@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue')
+window.$ = window.jQuery = require('jquery')
 
 //Imports
 import axios from 'axios'
@@ -17,11 +18,13 @@ let router = new Router({
     routes: [
         {
             path: '/',
-            component: require('./components/products/index.vue').default
+            component: require('./components/products/index.vue').default,
+            name: 'Home'
         },
         {
             path: '/crear',
-            component: require('./components/products/create.vue').default
+            component: require('./components/products/create.vue').default,
+            name: 'Create'
         }
     ]
 });

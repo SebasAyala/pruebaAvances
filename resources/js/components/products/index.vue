@@ -1,18 +1,35 @@
 <template>
-    <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <span class="navbar-brand">Gestión de Productos</span>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary my-2 my-sm-0" href="#" tabindex="-1" aria-disabled="true">Crear Nuevo Producto</a>
-                    </li>
-                </ul>
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-12 col-md-6">
+                                <h3>Gestión de Productos</h3>
+                            </div>
+                            <div class="col-12 col-md-6 text-right">
+                                <router-link class="btn btn-primary" to="/crear">Crear Nuevo Producto</router-link>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card no-padding no-border">
+                                    <div class="card-body">
+                                        <b-table hover :items="products" :fields="fields">
+                                            <template v-slot:cell(id)="row">
+                                                <b-button @click="editProd(row.item.id)" size="sm" class="btn btn-success right">
+                                                    Editar
+                                                </b-button>
+                                            </template>
+                                        </b-table>
+                                    </div>
+                                </div>    
+                            </div> 
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>
-        <div class="container-fluid"> 
-            <h1>Index</h1>
-            <b-table hover :items="items"></b-table>
         </div>
     </div>
 </template>
@@ -23,16 +40,43 @@
     export default {
         data() {
             return {
-                items: [
-                    { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                    { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                    { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                    { age: 38, first_name: 'Jami', last_name: 'Carney' }
-                ]
+                fields: ['Nombre del producto', 'Código', 'Existencia', 'Bodega', 'Descripción', 'Estado', {key:'id', label: 'Acciones'}],
+                products: []
             }
         },
+        methods: {
+            editProd (id) {
+                console.log(id)
+            },
+        },
         mounted() {
-
+            axios.get('http://localhost/pruebaAvances/public/api/productos')
+                .then((res)=>{
+                    console.log(res.data);
+                    this.products = res.data.map(function(prod) {
+                        return {
+                            'Nombre del producto': prod.name,
+                            'Código': prod.code,
+                            'Existencia': prod.stock,
+                            'Bodega': prod.warehouse,
+                            'Descripción': prod.description,
+                            'Estado': prod.state ? 'Activo' : 'Inactivo',
+                            'id': prod.id
+                        }
+                    })
+                }, 200)
+                .catch((err)=>{
+                    console.log(err.config);
+                    if (err.response) {
+                        console.log(err.response.data);
+                        console.log(err.response.status);
+                        console.log(err.response.headers);
+                    } else if (err.request) {
+                        console.log(err.request);
+                    } else {
+                        console.log('Error', err.message);
+                    }
+                })
         }
     }
 </script>

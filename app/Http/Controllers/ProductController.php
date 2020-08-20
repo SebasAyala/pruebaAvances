@@ -9,7 +9,9 @@ class ProductController extends Controller
 {
     public function index() {
         //Get all the products
-        $products = Product::all();
+        $products = Product::select('products.id', 'products.name', 'products.code', 'products.stock', 'warehouses.name AS warehouse', 'products.description', 'products.state')
+            ->join('warehouses', 'warehouses.id', '=', 'products.warehouse_id')
+            ->get();
 
         return response()->json($products, 200);
     }

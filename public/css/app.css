@@ -14098,3 +14098,20 @@ input[type=color].form-control:disabled {
   vertical-align: text-bottom;
 }
 
+.no-padding {
+  padding: 0px !important;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.right {
+  float: right !important;
+}
+
