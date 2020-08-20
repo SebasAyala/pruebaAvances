@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->integer('stock')->default(0);
             $table->text('description');
-            $table->boolean('state');
+            $table->boolean('state')->default(true);
             $table->foreignId('warehouse_id')->constrained('warehouses');
             $table->timestamps();
         });

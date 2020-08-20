@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('productos', 'ProductController@index')->name('product.index');
+Route::post('productos/crear', 'ProductController@store')->name('product.store');
+Route::get('productos/{id}', 'ProductController@show')->name('product.show');
+Route::post('productos/{id}/editar', 'ProductController@update')->name('product.update');
+
+Route::get('bodegas', 'WarehouseController@index')->name('warehouse.index');
